@@ -1,3 +1,4 @@
 CrawlText/data/*
 model/*
 test.py
+data/*

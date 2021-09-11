@@ -3,7 +3,6 @@ import torch
 import os
 import transformers
 from pytorch_pretrained_bert import BertAdam
-from tqdm import tqdm
 from train import train
 from utils import MyDataset, CollateFn
 from torch.utils.data import DistributedSampler, DataLoader
