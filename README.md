@@ -22,7 +22,7 @@ python3 convert_rawdata.py \
 ```
 Tips: 
 - an example file of raw data is put in data/domain-name/raw
-- this step (as well as step 3) needs a file to initialize the BertTokenizer, [download here]()
+- this step (as well as step 3) needs a file to initialize the BertTokenizer, [download here](https://pan.baidu.com/s/1q-LbuS18Eb0M8KKThHgvbA), key: av3o
 
 #### Step 2
 then run the train script to train your own TextGenerator model:
@@ -48,13 +48,18 @@ Tips: to use command-line mode, add '--cmd' to the command above
 
 
 ### Crawl your own corpus
+- todo
 
 
 ### Generate Result
 
 #### Chinese
-
+水浒传主题
+![](https://github.com/yeeeqichen/Pictures/blob/master/shz_generate.png?raw=true)
+林黛玉遇上水浒传
+![](https://github.com/yeeeqichen/Pictures/blob/master/shz_daiyu.png?raw=true)
 #### English
+- todo
 
 
 
