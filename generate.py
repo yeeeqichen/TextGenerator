@@ -11,12 +11,12 @@ app = Flask(__name__)
 def generate(input_context):
     input_ids = tokenizer.encode(input_context)
     out = fast_sample_sequence(model, input_ids, args.generate_length)
+    generate_text = tokenizer.convert_ids_to_tokens(out)
     text = []
-    for _id in out:
-        generate_text = tokenizer.convert_ids_to_tokens([_id])
-        if generate_text != ['[UNK]']:
-            text += generate_text
-        elif generate_text == ['[SEP]']:
+    for token in generate_text:
+        if token != '[UNK]':
+            text += [token]
+        elif token == '[SEP]':
             text += ['\n']
 
     return ''.join(text)
