@@ -2,7 +2,7 @@ import json
 import os
 import argparse
 from tqdm import tqdm
-from pytorch_transformers import BertTokenizer
+from transformers import BertTokenizer
 
 
 def build_files(data_path, tokenized_data_path, num_pieces, full_tokenizer, min_length):
@@ -31,13 +31,15 @@ def build_files(data_path, tokenized_data_path, num_pieces, full_tokenizer, min_
     print('finish')
 
 
-def convert_raw_data_to_json(data_path='./raw/', domain='your-domain-name'):
+def convert_raw_data_to_json(domain='your-domain-name'):
+    data_path = os.path.abspath('./' + domain + '/raw/') + '/'
     assert os.path.exists(data_path)
     datas = []
     files = os.listdir(data_path)
     for file in files:
         if domain + '.json' == file:
-            exit('already converted!')
+            print('already converted!')
+            return
     for file in files:
         with open(data_path + file, 'r', encoding='utf8') as f:
             article = f.read()
@@ -52,15 +54,15 @@ def convert_raw_data_to_json(data_path='./raw/', domain='your-domain-name'):
 def main():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--bert_path', default='', type=str)
-    parser.add_argument('--domain_name', default='domain-name', type=str)
+    parser.add_argument('--bert_path', default='bert-base-uncased', type=str)
+    parser.add_argument('--domain_name', default='CCTV_News', type=str)
 
     args = parser.parse_args()
 
     tokenizer = BertTokenizer.from_pretrained(args.bert_path)
     convert_raw_data_to_json(domain=args.domain_name)
-    build_files(data_path='./raw/' + args.domain_name + '.json',
-                tokenized_data_path='./tokenized/',
+    build_files(data_path=args.domain_name + '/raw/' + args.domain_name + '.json',
+                tokenized_data_path='./' + args.domain_name + '/tokenized/',
                 num_pieces=10,
                 full_tokenizer=tokenizer,
                 min_length=100)

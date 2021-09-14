@@ -10,11 +10,17 @@ import os
 
 
 class CrawltextPipeline:
+    item_cnt = 0
     def process_item(self, item, spider):
-        target_dir = os.path.abspath('../') + '/data/' + spider.name + '/'
+        target_dir = os.path.abspath('../../') + '/data/' + spider.name
         if not os.path.exists(target_dir):
             os.mkdir(target_dir)
-        with open(target_dir + item['title'] + '.txt', 'w', encoding='utf-8') as f:
+            os.mkdir(target_dir + '/raw/')
+        target_dir += '/raw/'
+        file_name = 'news_' + str(self.item_cnt) + '.txt'
+        self.item_cnt += 1
+        with open(target_dir + file_name, 'w', encoding='utf-8') as f:
+            f.write('News Title: ' + item['title'] + '\n')
             f.write(item['content'])
         return item
 

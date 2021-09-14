@@ -10,6 +10,9 @@ class ShuihuItem(scrapy.Item):
     title = scrapy.Field()
     content = scrapy.Field()
 
+class CCTVNewsItem(scrapy.Item):
+    title = scrapy.Field()
+    content = scrapy.Field()
 
 class CrawltextItem(scrapy.Item):
     # define the fields for your item here like:
