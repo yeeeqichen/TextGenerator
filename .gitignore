@@ -3,3 +3,4 @@ model/*
 test.py
 data/domain-name/tokenized/*
 data/CCTV_News/*
+data/Shuihu/*

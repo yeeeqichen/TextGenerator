@@ -14,15 +14,16 @@ An easy-to-use framework of TextGenerator, supports different domains, different
 ### Quick Start
 
 #### Step 1
-put your domain-specific raw data into data/domain-name/raw, then run the data preprocess script in data/domain-name/:
+put your domain-specific raw data into data/domain-name/raw, then run the data preprocess script in data/:
 ```shell
 python3 convert_rawdata.py \
-  --bert_path <the file to initialize the BertTokenizer> \
+  --bert_path <the file or url to initialize the BertTokenizer> \
   --domain_name <the domain-name of your own corpus, defalut set to 'domain-name'>
 ```
 Tips: 
 - an example file of raw data is put in data/domain-name/raw
-- this step (as well as step 3) needs a file to initialize the BertTokenizer, [download here](https://pan.baidu.com/s/1q-LbuS18Eb0M8KKThHgvbA), key: av3o
+- it will create a new directory 'data/tokenized/' , which contains the tokenized data for further training.
+- this step (as well as step 3) needs to initialize the BertTokenizer, with hugging-face url, i.e 'bert-base-uncased', for more information, please refer to [hugging face](https://huggingface.co/)
 
 #### Step 2
 then run the train script to train your own TextGenerator model:
@@ -41,14 +42,35 @@ The final step, run the generating script to start your own TextGenerator, have 
 ```shell
 python3 generate.py \
   --gpt_pretrained_path <the directory you store your TextGenerator path>
-  --bert_pretrained_path <the directory for a pretrained_bert model, for the tokenizer>
+  --bert_pretrained_path <the directory or url for a pretrained_bert model, for the tokenizer>
   --device <which device should the model run on>
 ```
 Tips: to use command-line mode, add '--cmd' to the command above
 
 
 ### Crawl your own corpus
-- todo
+In this repo, we provide several crawlers for you to crawl training corpus from Internet 
+
+you could crawl your own corpus by customize the spider setting
+
+To enable the crawler to work normally, you need to install following dependencies:
+
+- scrapy
+- scrapy_splash
+
+also, a splash service provided by docker is also needed, run the following command:
+```shell
+docker pull scrapinghub/splash
+docker run -p 8050:8050 scrapinghub/splash
+```
+Tips: to learn more about docker, you could refer to [here](http://get.daocloud.io/)
+
+Finally, run the python script to start your crawler
+```shell
+python3 CrawlText/CrawlText/run.py \
+  --crawler <specify a crawler , default set to 'CCTV_News'>
+```
+
 
 
 ### Generate Result

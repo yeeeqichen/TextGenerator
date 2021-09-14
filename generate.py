@@ -2,7 +2,6 @@ import argparse
 from flask import Flask, request
 from utils import fast_sample_sequence
 import transformers
-import pytorch_transformers
 import json
 
 app = Flask(__name__)
@@ -44,7 +43,7 @@ def run_cmd():
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--gpt_pretrained_path', default='model/final_model/', type=str)
-parser.add_argument('--bert_pretrained_path', default='D:/PythonProjects/语言模型/bert-base-chinese', type=str)
+parser.add_argument('--bert_pretrained_path', default='bert-base-uncased', type=str)
 parser.add_argument('--generate_length', default=150, type=int)
 parser.add_argument('--device', default='cuda:0', type=str)
 parser.add_argument('--cmd', action='store_true', default=False,
@@ -53,7 +52,7 @@ parser.add_argument('--cmd', action='store_true', default=False,
 args = parser.parse_args()
 
 model = transformers.GPT2LMHeadModel.from_pretrained(args.gpt_pretrained_path).to(args.device)
-tokenizer = pytorch_transformers.BertTokenizer.from_pretrained(args.bert_pretrained_path)
+tokenizer = transformers.BertTokenizer.from_pretrained(args.bert_pretrained_path)
 if args.cmd:
     run_cmd()
 else:
