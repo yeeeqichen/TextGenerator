@@ -1,4 +1,4 @@
 CrawlText/data/*
 model/*
 test.py
-data/*
+data/domain-name/tokenized/*

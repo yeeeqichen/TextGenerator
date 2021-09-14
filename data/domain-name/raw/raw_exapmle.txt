@@ -1,0 +1,1 @@
+This file contents a article or any type of raw text. 这个文件中包含供模型训练用的原始文本。
