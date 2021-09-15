@@ -4,12 +4,21 @@
 ### Description
 An easy-to-use framework of TextGenerator, supports different domains, different languages text generation!
 
+If you already have some corpus for training, just follow the Quick Start to train your own TextGenerator in 3 steps!
+
+Or we provide you a crawler to crawl your own data from internet
 ### Features
 
 - A crawler built with scrapy, you can easily get your train corpus based on your domain
 - A model train script for you to train your own TextGenerator
 - Provide many ways of generation, including: cmd-line mode and web-server mode
 
+### Dependencies
+
+- scrapy == 2.5.0
+- scrapy_splash == 0.7.2
+- transformers == 4.10.0
+- torch == 1.8.1
 
 ### Quick Start
 
@@ -17,13 +26,13 @@ An easy-to-use framework of TextGenerator, supports different domains, different
 put your domain-specific raw data into data/domain-name/raw, then run the data preprocess script in data/:
 ```shell
 python3 convert_rawdata.py \
-  --bert_path <the file or url to initialize the BertTokenizer> \
+  --tokenizer_path <the file or url to initialize the GPT2Tokenizer> \
   --domain_name <the domain-name of your own corpus, defalut set to 'domain-name'>
 ```
 Tips: 
 - an example file of raw data is put in data/domain-name/raw
 - it will create a new directory 'data/tokenized/' , which contains the tokenized data for further training.
-- this step (as well as step 3) needs to initialize the BertTokenizer, with hugging-face url, i.e 'bert-base-uncased', for more information, please refer to [hugging face](https://huggingface.co/)
+- this step (as well as step 3) needs to initialize the GPT2Tokenizer, with hugging-face url, i.e 'gpt2distil', for more information, please refer to [hugging face](https://huggingface.co/)
 
 #### Step 2
 then run the train script to train your own TextGenerator model:
@@ -42,7 +51,7 @@ The final step, run the generating script to start your own TextGenerator, have 
 ```shell
 python3 generate.py \
   --gpt_pretrained_path <the directory you store your TextGenerator path>
-  --bert_pretrained_path <the directory or url for a pretrained_bert model, for the tokenizer>
+  --tokenzier_path <the directory or url for a pretrained tokenizer>
   --device <which device should the model run on>
 ```
 Tips: to use command-line mode, add '--cmd' to the command above
@@ -68,7 +77,7 @@ Tips: to learn more about docker, you could refer to [here](http://get.daocloud.
 Finally, run the python script to start your crawler
 ```shell
 python3 CrawlText/CrawlText/run.py \
-  --crawler <specify a crawler , default set to 'CCTV_News'>
+  --crawler <specify a crawler , default set to 'CCTV_News', for chinese corpus, please set to 'Shuihu'>
 ```
 
 
@@ -81,7 +90,8 @@ python3 CrawlText/CrawlText/run.py \
 林黛玉遇上水浒传
 ![](https://github.com/yeeeqichen/Pictures/blob/master/shz_daiyu.png?raw=true)
 #### English
-- todo
+CCTV_News
+![](https://github.com/yeeeqichen/Pictures/blob/master/CCTV_result.png?raw=true)
 
 
 
