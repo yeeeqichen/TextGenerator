@@ -12,10 +12,10 @@ import torch.distributed as dist
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--device', default='0', type=str, required=False, help='设置使用哪些显卡')
-    parser.add_argument('--tokenized_data_path', default='CrawlText/data/Shuihu/tokenized/', type=str, required=False,
+    parser.add_argument('--tokenized_data_path', default='data/CCTV_News/tokenized/', type=str, required=False,
                         help='tokenized语料存放位置')
     parser.add_argument('--epochs', default=5, type=int, required=False, help='训练循环')
-    parser.add_argument('--batch_size', default=8, type=int, required=False, help='训练batch size')
+    parser.add_argument('--batch_size', default=3, type=int, required=False, help='训练batch size')
     parser.add_argument('--lr', default=1.5e-4, type=float, required=False, help='学习率')
     parser.add_argument('--warmup_steps', default=2000, type=int, required=False, help='warm up步数')
     parser.add_argument('--log_step', default=1, type=int, required=False, help='多少步汇报一次loss，设置为gradient accumulation的整数倍')
@@ -24,10 +24,8 @@ def main():
     parser.add_argument('--fp16', action='store_true', help='混合精度')
     parser.add_argument('--fp16_opt_level', default='O1', type=str, required=False)
     parser.add_argument('--max_grad_norm', default=1.0, type=float, required=False)
-    parser.add_argument('--num_pieces', default=100, type=int, required=False, help='将训练语料分成多少份')
-    parser.add_argument('--min_length', default=128, type=int, required=False, help='最短收录文章长度')
     parser.add_argument('--output_dir', default='model/', type=str, required=False, help='模型输出路径')
-    parser.add_argument('--pretrained_model', default='D:/PythonProjects/语言模型/gpt2-chinese-distill',
+    parser.add_argument('--pretrained_model', default='D:/PythonProjects/语言模型/gpt2-english-distil',
                         type=str, required=False, help='模型训练起点路径')
     parser.add_argument('--writer_dir', default='tensorboard_summary/', type=str, required=False, help='Tensorboard路径')
     parser.add_argument('--segment', action='store_true', help='中文以词为单位')
@@ -52,7 +50,7 @@ def main():
 
 
 def train_proc(index, args):
-    dist.init_process_group(backend='nccl',
+    dist.init_process_group(backend='gloo',
                             init_method='env://',
                             world_size=args.world_size,
                             rank=index)

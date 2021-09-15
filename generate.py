@@ -18,7 +18,7 @@ def generate(input_context):
         elif token == '[SEP]':
             text += ['\n']
 
-    return ''.join(text)
+    return ''.join(text).replace('Ġ', ' ')
 
 
 @app.route('/generate', methods=['POST', 'GET'])
@@ -29,21 +29,21 @@ def index():
 
 
 def run_cmd():
-    print('欢迎使用狗屁不通生成器！')
+    print('Welcome to TextGenerator！')
     while True:
         print('=' * 80)
-        input_context = input('请输入一个故事开头，或输入exit退出:')
+        input_context = input('please enter a prefix text to start generating; or enter "exit" to stop:')
         if input_context == 'exit':
             break
         response = generate(input_context)
-        print('狗屁不通生成器生成结果：')
+        print('generating result：')
         print('=' * 80)
         print(response)
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--gpt_pretrained_path', default='model/final_model/', type=str)
-parser.add_argument('--bert_pretrained_path', default='bert-base-uncased', type=str)
+parser.add_argument('--gpt_pretrained_path', default='model/final_model', type=str)
+parser.add_argument('--tokenizer_path', default='distilgpt2', type=str)
 parser.add_argument('--generate_length', default=150, type=int)
 parser.add_argument('--device', default='cuda:0', type=str)
 parser.add_argument('--cmd', action='store_true', default=False,
@@ -52,7 +52,7 @@ parser.add_argument('--cmd', action='store_true', default=False,
 args = parser.parse_args()
 
 model = transformers.GPT2LMHeadModel.from_pretrained(args.gpt_pretrained_path).to(args.device)
-tokenizer = transformers.BertTokenizer.from_pretrained(args.bert_pretrained_path)
+tokenizer = transformers.GPT2Tokenizer.from_pretrained(args.tokenizer_path)
 if args.cmd:
     run_cmd()
 else:
