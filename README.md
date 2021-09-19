@@ -50,8 +50,8 @@ Tips: for more detailed parameter setting, please refer to main.py
 The final step, run the generating script to start your own TextGenerator, have fun!
 ```shell
 python3 generate.py \
-  --gpt_pretrained_path <the directory you store your TextGenerator path>
-  --tokenzier_path <the directory or url for a pretrained tokenizer>
+  --gpt_pretrained_path <the directory you store your TextGenerator path> \
+  --tokenzier_path <the directory or url for a pretrained tokenizer> \
   --device <which device should the model run on>
 ```
 Tips: to use command-line mode, add '--cmd' to the command above
